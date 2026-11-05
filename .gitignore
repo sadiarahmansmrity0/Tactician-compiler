@@ -1,0 +1,17 @@
+# Generated Flex & Bison C files
+src/lexer/lex.yy.c
+src/parser/parser.tab.c
+src/parser/parser.tab.h
+src/parser/parser.output
+
+# Compiled executables and object files
+tactician
+*.o
+*.out
+
+# OS & IDE junk files
+.DS_Store
+Thumbs.db
+.vscode/
+*.swp
+*.swo
