@@ -15,7 +15,7 @@ void lexer_set_input(FILE *input);
 TokenKind lexer_next(Token *token);
 ```
 
-The caller owns the input stream and initializes a `Token` with `token_init` before its first call to `lexer_next`. Each returned token is owned by that `Token`; call `token_clear` before it goes out of scope. A future Bison interface can map `TokenKind` values to Bison token constants and transfer lexemes/locations without changing the scanner rules.
+The caller owns the input stream and initializes a `Token` with `token_init` before its first call to `lexer_next`. Each returned token is owned by that `Token`; call `token_clear` before it goes out of scope. The generated Flex scanner uses the `raw_` symbol prefix so a separate Bison adapter can define `yylex()` without changing the scanner rules. That adapter maps `TokenKind` values to Bison token constants and transfers lexemes/locations.
 
 ## Token categories and patterns
 

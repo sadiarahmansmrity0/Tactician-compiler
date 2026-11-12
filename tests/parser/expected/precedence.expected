@@ -1,0 +1,9 @@
+Program
+  Declaration (bool result)
+  Assignment (result)
+    Binary (||)
+      Boolean (true)
+      Binary (&&)
+        Boolean (false)
+        Unary (!)
+          Boolean (false)

@@ -1,0 +1,36 @@
+Program
+  Declaration (bool ready)
+  Assignment (ready)
+    Boolean (true)
+  Block
+    Declaration (int inner)
+    Assignment (inner)
+      Integer (2)
+    If
+      Condition
+        Identifier (ready)
+      Then
+        Block
+          Print
+            Identifier (inner)
+  IfElse
+    Condition
+      Binary (==)
+        Identifier (ready)
+        Boolean (true)
+    Then
+      Block
+        Print
+          Identifier (ready)
+    Else
+      Block
+        Print
+          Boolean (false)
+  While
+    Condition
+      Unary (!)
+        Identifier (ready)
+    Body
+      Block
+        Assignment (ready)
+          Boolean (true)

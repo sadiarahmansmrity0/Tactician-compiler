@@ -1,0 +1,8 @@
+Program
+  Declaration (int age)
+  Assignment (age)
+    Binary (+)
+      Integer (21)
+      Integer (5)
+  Print
+    Identifier (age)

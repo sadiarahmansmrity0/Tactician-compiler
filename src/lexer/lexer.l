@@ -1,4 +1,4 @@
-%option noyywrap nounput noinput nodefault never-interactive
+%option noyywrap nounput noinput nodefault never-interactive prefix="raw_"
 
 %{
 #include "lexer.h"
@@ -201,7 +201,7 @@ void lexer_set_input(FILE *input)
     comment_location.line = 1;
     comment_location.column = 1;
     BEGIN(INITIAL);
-    yyrestart(input);
+    raw_restart(input);
 }
 
 TokenKind lexer_next(Token *token)
@@ -211,7 +211,7 @@ TokenKind lexer_next(Token *token)
         return TOKEN_ERROR;
     }
     token_clear(token);
-    (void)yylex();
+    (void)raw_lex();
     kind = scanner_token.kind;
     *token = scanner_token;
     token_init(&scanner_token);
