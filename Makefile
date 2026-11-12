@@ -14,8 +14,10 @@ PARSER_SOURCES = $(PARSER_CORE_SOURCES) src/parser/parser_driver.c
 SYMBOL_TABLE_EXE = $(BUILD_DIR)/tactician-symbol-table.exe
 SYMBOL_TABLE_TEST_EXE = $(BUILD_DIR)/symbol-table-tests.exe
 SYMBOL_TABLE_SOURCE = src/symbol_table/symbol_table.c
+SEMANTIC_EXE = $(BUILD_DIR)/tactician-semantic.exe
+SEMANTIC_SOURCES = src/semantic/semantic.c src/semantic/semantic_driver.c
 
-.PHONY: all lexer parser symbol-table test clean
+.PHONY: all lexer parser symbol-table semantic test clean
 
 all: parser
 
@@ -49,10 +51,16 @@ $(SYMBOL_TABLE_TEST_EXE): $(PARSER_C) $(PARSER_H) $(LEXER_C) $(PARSER_CORE_SOURC
 
 symbol-table: $(SYMBOL_TABLE_EXE)
 
-test: $(LEXER_EXE) $(PARSER_EXE) $(SYMBOL_TABLE_EXE) $(SYMBOL_TABLE_TEST_EXE)
+$(SEMANTIC_EXE): $(PARSER_C) $(PARSER_H) $(LEXER_C) $(PARSER_CORE_SOURCES) $(SYMBOL_TABLE_SOURCE) $(SEMANTIC_SOURCES) src/semantic/semantic.h src/symbol_table/symbol_table.h src/parser/parser.h src/ast/ast.h src/lexer/lexer.h src/lexer/token.h src/common/source_location.h
+	$(CC) $(CFLAGS) -Ibuild -Isrc/parser -Isrc/ast -Isrc/symbol_table -Isrc/semantic -o $@ $(PARSER_C) $(LEXER_C) $(PARSER_CORE_SOURCES) $(SYMBOL_TABLE_SOURCE) $(SEMANTIC_SOURCES)
+
+semantic: $(SEMANTIC_EXE)
+
+test: $(LEXER_EXE) $(PARSER_EXE) $(SYMBOL_TABLE_EXE) $(SYMBOL_TABLE_TEST_EXE) $(SEMANTIC_EXE)
 	sh tests/run_lexer_tests.sh
 	sh tests/run_parser_tests.sh
 	sh tests/run_symbol_table_tests.sh
+	sh tests/run_semantic_tests.sh
 
 clean:
 	rm -rf $(BUILD_DIR)

@@ -1,0 +1,2 @@
+Semantic error at line 3: Operator '<' requires numeric operands, but found int and bool.
+Semantic analysis failed: 1 error(s).

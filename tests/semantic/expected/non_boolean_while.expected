@@ -1,0 +1,2 @@
+Semantic error at line 1: While condition must be bool, but found int.
+Semantic analysis failed: 1 error(s).

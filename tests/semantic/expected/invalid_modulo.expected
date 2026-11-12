@@ -1,0 +1,2 @@
+Semantic error at line 3: Operator '%' requires integer operands, but found float and int.
+Semantic analysis failed: 1 error(s).

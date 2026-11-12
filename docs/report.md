@@ -24,6 +24,14 @@ The AST is defined in `src/ast/ast.h` and constructed through functions in `src/
 
 The `ast_print` function displays an indented tree. For example, `age = 21 + 5;` appears as an assignment whose value is a `Binary (+)` node with integer children `21` and `5`. AST free functions recursively release child nodes, statement-list cells, and owned identifier strings. Bison destructors release semantic values discarded during error recovery; a parse containing any error does not return its AST to the caller.
 
+## 12. Semantic Analysis
+
+The semantic analyzer in `src/semantic/` walks the parsed AST in source order using a fresh symbol table. Declarations become visible when their declaration nodes are visited, so an earlier assignment or expression use cannot see a later declaration. Each block enters a scope and restores its parent scope when traversal leaves the block; this includes blocks used by `if`, `if-else`, and `while`. Child-scope shadowing is preserved, and duplicate declarations in one scope are reported.
+
+Expression analysis recursively returns `int`, `float`, `bool`, or an internal error type. It enforces numeric arithmetic, integer-only modulo, numeric relational comparisons, compatible equality, Boolean logical operators and NOT, approved assignment widening, and Boolean control-flow conditions. `print` accepts any correctly typed expression. Errors include source lines; analysis continues across independent statements and suppresses type follow-ons when an operand is already invalid.
+
+The public `semantic_analyze` API returns a success flag and error count and writes diagnostics to a caller-provided stream. The semantic command-line driver first requires successful parsing, then runs semantic analysis. A clean integrated test run passed all eight lexer cases, fourteen parser cases, three symbol-table harness cases, and twenty-four semantic cases (six valid and eighteen invalid), with no failures.
+
 ## 13. Symbol Table
 
 The symbol table in `src/symbol_table/` stores each declared name, its `int`, `float`, or `bool` type, scope ID, and declaration line. Scopes form a retained parent/child tree with the program's outer scope at ID 0. Lookup starts at the current scope and walks outward; local lookup checks only the current scope. A declaration is rejected as a duplicate only if its name already exists in the current scope.

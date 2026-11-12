@@ -1,0 +1,4 @@
+{
+    int inner;
+}
+print inner;

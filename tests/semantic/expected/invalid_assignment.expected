@@ -1,0 +1,2 @@
+Semantic error at line 2: Cannot assign bool to int variable 'count'.
+Semantic analysis failed: 1 error(s).

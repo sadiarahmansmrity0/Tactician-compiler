@@ -1,0 +1,2 @@
+Semantic error at line 2: Duplicate declaration of 'value' in the same scope.
+Semantic analysis failed: 1 error(s).
