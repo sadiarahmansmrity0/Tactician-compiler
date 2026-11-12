@@ -8,6 +8,7 @@ src/parser/parser.output
 tactician
 *.o
 *.out
+build/
 
 # OS & IDE junk files
 .DS_Store

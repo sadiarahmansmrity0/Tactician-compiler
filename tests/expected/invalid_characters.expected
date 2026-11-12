@@ -1,0 +1,8 @@
+1:1 INT            "int"
+error 1:5: invalid character '@' near "@"
+1:6 IDENTIFIER     "x"
+1:7 SEMICOLON      ";"
+2:1 PRINT          "print"
+error 2:7: invalid character '#' near "#"
+2:8 SEMICOLON      ";"
+3:1 EOF           

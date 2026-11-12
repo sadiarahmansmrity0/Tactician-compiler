@@ -1,0 +1,13 @@
+1:1 ASSIGN         "="
+1:3 EQ             "=="
+1:6 NOT            "!"
+1:8 NE             "!="
+1:11 LT             "<"
+1:13 LE             "<="
+1:16 GT             ">"
+1:18 GE             ">="
+error 1:21: invalid character '&' near "&"
+1:23 AND            "&&"
+error 1:26: invalid character '|' near "|"
+1:28 OR             "||"
+2:1 EOF           

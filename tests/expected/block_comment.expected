@@ -1,0 +1,4 @@
+2:20 PRINT          "print"
+2:26 IDENTIFIER     "x"
+2:27 SEMICOLON      ";"
+3:1 EOF           

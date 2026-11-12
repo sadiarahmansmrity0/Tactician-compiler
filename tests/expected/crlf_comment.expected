@@ -1,0 +1,4 @@
+3:1 PRINT          "print"
+3:7 IDENTIFIER     "item"
+3:11 SEMICOLON      ";"
+4:1 EOF           
