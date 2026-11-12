@@ -1,0 +1,6 @@
+2: duplicate declaration of 'item' in scope 0
+5: duplicate declaration of 'item' in scope 1
+Scope 0 (root)
+  item : int (declared line 1)
+  Scope 1 (parent 0, opened at 3:1)
+    item : bool (declared line 4)
