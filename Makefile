@@ -15,9 +15,13 @@ SYMBOL_TABLE_EXE = $(BUILD_DIR)/tactician-symbol-table.exe
 SYMBOL_TABLE_TEST_EXE = $(BUILD_DIR)/symbol-table-tests.exe
 SYMBOL_TABLE_SOURCE = src/symbol_table/symbol_table.c
 SEMANTIC_EXE = $(BUILD_DIR)/tactician-semantic.exe
-SEMANTIC_SOURCES = src/semantic/semantic.c src/semantic/semantic_driver.c
+SEMANTIC_CORE = src/semantic/semantic.c
+SEMANTIC_SOURCES = $(SEMANTIC_CORE) src/semantic/semantic_driver.c
+TAC_EXE = $(BUILD_DIR)/tactician-tac.exe
+TAC_TEST_EXE = $(BUILD_DIR)/tac-tests.exe
+TAC_CORE = src/tac/tac.c
 
-.PHONY: all lexer parser symbol-table semantic test clean
+.PHONY: all lexer parser symbol-table semantic tac test clean
 
 all: parser
 
@@ -56,11 +60,21 @@ $(SEMANTIC_EXE): $(PARSER_C) $(PARSER_H) $(LEXER_C) $(PARSER_CORE_SOURCES) $(SYM
 
 semantic: $(SEMANTIC_EXE)
 
-test: $(LEXER_EXE) $(PARSER_EXE) $(SYMBOL_TABLE_EXE) $(SYMBOL_TABLE_TEST_EXE) $(SEMANTIC_EXE)
+$(TAC_EXE): $(PARSER_C) $(PARSER_H) $(LEXER_C) $(PARSER_CORE_SOURCES) $(SYMBOL_TABLE_SOURCE) $(SEMANTIC_CORE) $(TAC_CORE) src/tac/tac.h src/tac/tac_driver.c src/semantic/semantic.h src/symbol_table/symbol_table.h src/parser/parser.h src/ast/ast.h src/lexer/lexer.h src/lexer/token.h src/common/source_location.h
+	$(CC) $(CFLAGS) -Ibuild -Isrc/parser -Isrc/ast -Isrc/symbol_table -Isrc/semantic -Isrc/tac -o $@ $(PARSER_C) $(LEXER_C) $(PARSER_CORE_SOURCES) $(SYMBOL_TABLE_SOURCE) $(SEMANTIC_CORE) $(TAC_CORE) src/tac/tac_driver.c
+
+tac: $(TAC_EXE)
+
+$(TAC_TEST_EXE): $(PARSER_C) $(PARSER_H) $(LEXER_C) $(PARSER_CORE_SOURCES) $(SYMBOL_TABLE_SOURCE) $(SEMANTIC_CORE) $(TAC_CORE) tests/tac_unit.c src/tac/tac.h src/semantic/semantic.h src/symbol_table/symbol_table.h src/parser/parser.h src/ast/ast.h src/lexer/lexer.h src/lexer/token.h src/common/source_location.h
+	$(CC) $(CFLAGS) -Ibuild -Isrc/parser -Isrc/ast -Isrc/symbol_table -Isrc/semantic -Isrc/tac -o $@ $(PARSER_C) $(LEXER_C) $(PARSER_CORE_SOURCES) $(SYMBOL_TABLE_SOURCE) $(SEMANTIC_CORE) $(TAC_CORE) tests/tac_unit.c
+
+test: $(LEXER_EXE) $(PARSER_EXE) $(SYMBOL_TABLE_EXE) $(SYMBOL_TABLE_TEST_EXE) $(SEMANTIC_EXE) $(TAC_EXE) $(TAC_TEST_EXE)
 	sh tests/run_lexer_tests.sh
 	sh tests/run_parser_tests.sh
 	sh tests/run_symbol_table_tests.sh
 	sh tests/run_semantic_tests.sh
+	build/tac-tests.exe
+	sh tests/run_tac_tests.sh
 
 clean:
 	rm -rf $(BUILD_DIR)

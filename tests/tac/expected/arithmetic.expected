@@ -1,0 +1,1 @@
+Semantic error at line 3: Operator '+' requires numeric operands, but found bool and int.

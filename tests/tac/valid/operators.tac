@@ -1,0 +1,12 @@
+int a;
+int b;
+float f;
+bool x;
+bool y;
+a = 18 - 4 / 2;
+b = a % 3;
+f = 2.5 * 3.0;
+x = a > b;
+y = a <= b || a >= b && a != b;
+print a == b;
+print f;

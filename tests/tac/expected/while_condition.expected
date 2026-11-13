@@ -1,0 +1,1 @@
+Semantic error at line 2: While condition must be bool, but found float.

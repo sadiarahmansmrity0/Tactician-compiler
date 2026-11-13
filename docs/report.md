@@ -41,3 +41,11 @@ The project permits shadowing: a nested scope may declare a name already present
 `symbol_table_build_from_ast` traverses declarations and block statements, reports duplicates with line and scope, and provides a readable scope-tree dump. The table retains a borrowed association between AST blocks and their built scopes; a later AST walk can re-enter a matching block with `symbol_table_enter_existing_block`. The build helper gathers declarations before semantic analysis and therefore does not enforce declaration-before-use. The next semantic pass should populate a fresh table in source order as it visits declarations and expressions.
 
 The integrated `make test` run passed eight lexer cases, fourteen parser cases, and all three symbol-table harness cases (the API unit checks and two AST-based table snapshots). The tests cover all three types, lookup and missing names, same-scope duplicates, nested shadowing, parent visibility, scope exit/restoration, AST scope creation for blocks/conditionals/loops, and readable table output.
+
+## 14. Intermediate Code
+
+The TAC generator in `src/tac/` translates a semantically valid AST into readable Three-Address Code. Declarations have no runtime instruction in this project. Assignments and print statements emit instructions in source order; arithmetic operations use numbered temporary values. Relational and equality expressions are materialized as `true` or `false` temporaries. Logical AND and OR use conditional jumps to preserve short-circuit evaluation.
+
+If and if-else statements use labels and conditional jumps to select the correct branch. A while loop places its condition at a test label and jumps back to that label after each body execution. Temporary and label counters restart for each generation call. The CLI runs parsing and semantic analysis before generation, and produces no TAC when semantic analysis fails.
+
+The integrated verification run passed eight lexer cases, fourteen parser cases, three symbol-table cases, and twenty-four semantic cases. The TAC suite passed six exact-output valid programs and seven invalid semantic programs that produced diagnostics without TAC; a separate unit check confirmed deterministic output and counter reset across repeated calls. The build completed with the project's installed GCC 6.3.0, Flex 2.5.35, Bison 2.4.2, and Make 3.81.

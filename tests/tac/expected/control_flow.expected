@@ -1,0 +1,27 @@
+a = 1
+b = 4
+yes = true
+if a < b goto L1
+goto L2
+L1:
+print a
+L2:
+if yes goto L3
+goto L4
+L3:
+print true
+goto L5
+L4:
+print false
+L5:
+L6:
+if a < 3 goto L9
+goto L8
+L9:
+if yes goto L7
+goto L8
+L7:
+t1 = a + 1
+a = t1
+goto L6
+L8:

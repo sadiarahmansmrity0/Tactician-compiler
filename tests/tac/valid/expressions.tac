@@ -1,0 +1,13 @@
+int a;
+int b;
+int c;
+float f;
+bool ok;
+a = 10;
+b = 5;
+c = a + b * 2;
+f = 1.5 + 2;
+ok = a < b || !(a == b) && true;
+print 7;
+print f;
+print c % 3;

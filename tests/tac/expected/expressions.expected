@@ -1,0 +1,23 @@
+a = 10
+b = 5
+t1 = b * 2
+t2 = a + t1
+c = t2
+t3 = 1.5 + 2
+f = t3
+t4 = false
+if a < b goto L1
+goto L3
+L3:
+if a == b goto L2
+goto L4
+L4:
+goto L1
+L1:
+t4 = true
+L2:
+ok = t4
+print 7
+print f
+t5 = c % 3
+print t5

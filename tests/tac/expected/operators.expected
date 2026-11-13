@@ -1,0 +1,35 @@
+t1 = 4 / 2
+t2 = 18 - t1
+a = t2
+t3 = a % 3
+b = t3
+t4 = 2.5 * 3
+f = t4
+t5 = false
+if a > b goto L1
+goto L2
+L1:
+t5 = true
+L2:
+x = t5
+t6 = false
+if a <= b goto L3
+goto L5
+L5:
+if a >= b goto L6
+goto L4
+L6:
+if a != b goto L3
+goto L4
+L3:
+t6 = true
+L4:
+y = t6
+t7 = false
+if a == b goto L7
+goto L8
+L7:
+t7 = true
+L8:
+print t7
+print f

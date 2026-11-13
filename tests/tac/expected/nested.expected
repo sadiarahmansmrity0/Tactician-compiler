@@ -1,0 +1,29 @@
+a = 0
+b = false
+L1:
+if a < 4 goto L2
+goto L3
+L2:
+if a == 2 goto L5
+goto L4
+L4:
+t1 = a + 1
+a = t1
+goto L6
+L5:
+t2 = a + 2
+a = t2
+L6:
+L7:
+if b goto L8
+goto L10
+L10:
+if a < 0 goto L8
+goto L9
+L8:
+t3 = !b
+b = t3
+goto L7
+L9:
+goto L1
+L3:
