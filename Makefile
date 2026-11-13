@@ -23,7 +23,7 @@ TAC_CORE = src/tac/tac.c
 
 .PHONY: all lexer parser symbol-table semantic tac test clean
 
-all: parser
+all: tac
 
 lexer: $(LEXER_EXE)
 

@@ -1,0 +1,2 @@
+2:7: lexical error: invalid character '@' near '@'
+2:9 near '2': syntax error, unexpected integer literal, expecting ;
