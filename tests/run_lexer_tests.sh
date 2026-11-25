@@ -10,6 +10,8 @@ for input in tests/cases/*.tac; do
     expected="tests/expected/$name.expected"
     actual="build/$name.actual"
     normalized="build/$name.normalized"
+    normalized_expected="build/$name.expected.normalized"
+
     expected_status=0
     case "$name" in
         invalid_characters|operator_prefixes|unterminated_comment|unsupported_exponent)
@@ -23,6 +25,7 @@ for input in tests/cases/*.tac; do
     set -e
 
     tr -d '\r' < "$actual" > "$normalized"
+    tr -d '\r' < "$expected" > "$normalized_expected"
 
     if [ "$status" -ne "$expected_status" ]; then
         echo "FAIL $name: expected exit $expected_status, got $status"
@@ -30,7 +33,7 @@ for input in tests/cases/*.tac; do
         continue
     fi
 
-    if diff -u "$expected" "$normalized"; then
+    if diff -u "$normalized_expected" "$normalized"; then
         echo "PASS $name"
         passed=$((passed + 1))
     else
@@ -45,7 +48,8 @@ set +e
 status=$?
 set -e
 tr -d '\r' < build/crlf_comment.actual > build/crlf_comment.normalized
-if [ "$status" -eq 0 ] && diff -u tests/expected/crlf_comment.expected build/crlf_comment.normalized; then
+tr -d '\r' < tests/expected/crlf_comment.expected > build/crlf_comment.expected.normalized
+if [ "$status" -eq 0 ] && diff -u build/crlf_comment.expected.normalized build/crlf_comment.normalized; then
     echo "PASS crlf_comment"
     passed=$((passed + 1))
 else

@@ -9,12 +9,16 @@ for input in tests/parser/valid/*.tac; do
     name=$(basename "$input" .tac)
     expected="tests/parser/expected/$name.expected"
     actual="build/parser-$name.actual"
+    normalized="build/parser-$name.normalized"
+    normalized_expected="build/parser-$name.expected.normalized"
+
     set +e
     "$program" "$input" >"$actual" 2>&1
     status=$?
     set -e
-    tr -d '\r' < "$actual" > "build/parser-$name.normalized"
-    if [ "$status" -eq 0 ] && diff -u "$expected" "build/parser-$name.normalized"; then
+    tr -d '\r' < "$actual" > "$normalized"
+    tr -d '\r' < "$expected" > "$normalized_expected"
+    if [ "$status" -eq 0 ] && diff -u "$normalized_expected" "$normalized"; then
         echo "PASS parser valid: $name"
         passed=$((passed + 1))
     else
@@ -27,12 +31,16 @@ for input in tests/parser/invalid/*.tac; do
     name=$(basename "$input" .tac)
     expected="tests/parser/expected/$name.expected"
     actual="build/parser-$name.actual"
+    normalized="build/parser-$name.normalized"
+    normalized_expected="build/parser-$name.expected.normalized"
+
     set +e
     "$program" "$input" >"$actual" 2>&1
     status=$?
     set -e
-    tr -d '\r' < "$actual" > "build/parser-$name.normalized"
-    if [ "$status" -eq 1 ] && diff -u "$expected" "build/parser-$name.normalized"; then
+    tr -d '\r' < "$actual" > "$normalized"
+    tr -d '\r' < "$expected" > "$normalized_expected"
+    if [ "$status" -eq 1 ] && diff -u "$normalized_expected" "$normalized"; then
         echo "PASS parser invalid: $name"
         passed=$((passed + 1))
     else

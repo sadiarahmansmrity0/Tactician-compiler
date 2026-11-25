@@ -9,9 +9,12 @@ for input in tests/tac/valid/*.tac; do
     name=$(basename "$input" .tac)
     expected="tests/tac/expected/$name.expected"
     actual="build/tac-$name.actual"
+    normalized="build/tac-$name.normalized"
+    normalized_expected="build/tac-$name.expected.normalized"
     "$program" "$input" >"$actual" 2>&1
-    tr -d '\r' < "$actual" > "build/tac-$name.normalized"
-    if diff -u "$expected" "build/tac-$name.normalized"; then
+    tr -d '\r' < "$actual" > "$normalized"
+    tr -d '\r' < "$expected" > "$normalized_expected"
+    if diff -u "$normalized_expected" "$normalized"; then
         echo "PASS TAC valid: $name"
         passed=$((passed + 1))
     else
@@ -24,12 +27,15 @@ for input in tests/tac/invalid/*.tac; do
     name=$(basename "$input" .tac)
     expected="tests/tac/expected/$name.expected"
     actual="build/tac-$name.actual"
+    normalized="build/tac-$name.normalized"
+    normalized_expected="build/tac-$name.expected.normalized"
     set +e
     "$program" "$input" >"$actual" 2>&1
     status=$?
     set -e
-    tr -d '\r' < "$actual" > "build/tac-$name.normalized"
-    if [ "$status" -eq 1 ] && diff -u "$expected" "build/tac-$name.normalized"; then
+    tr -d '\r' < "$actual" > "$normalized"
+    tr -d '\r' < "$expected" > "$normalized_expected"
+    if [ "$status" -eq 1 ] && diff -u "$normalized_expected" "$normalized"; then
         echo "PASS TAC invalid (no TAC): $name"
         passed=$((passed + 1))
     else

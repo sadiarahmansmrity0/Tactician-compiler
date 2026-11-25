@@ -2,11 +2,15 @@
 
 The Compiler Construction Lab Manual remains authoritative for required project features. This log records approved choices for details the manual does not specify. The matching formal grammar and semantic compatibility table are maintained in [grammar.md](grammar.md).
 
-## Compiler toolchain
+## Compiler architecture
 
-- Compiler core: C with Flex, Bison, GCC, and Make.
-- Do not maintain separate C and C++ compiler implementations.
-- Java UI is a supporting component under `ui/` on the separate `feature/ui` branch. UI implementation and integration are deferred until the command-line compiler is stable.
+- Maintain three source-language front ends: C-style, C++-style, and Java-style.
+- Each front end has its own lexer and parser and converts its input into the shared AST.
+- Share the AST, symbol table, semantic analyzer, and TAC generator across all three front ends.
+- Build separate compiler executables for C, C++, and Java source-language inputs.
+- Preserve the original Tactician mini-language syntax as a supported input format.
+- Provide a browser-based interface for writing and running programs; the web interface replaces the previous Java Swing GUI.
+- Keep the existing C compiler implementation stable while introducing the additional front ends incrementally.
 
 ## Language details
 

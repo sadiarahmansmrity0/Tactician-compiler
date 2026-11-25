@@ -10,6 +10,11 @@ tactician
 *.out
 build/
 
+# Java compiled classes and IntelliJ project files
+*.class
+.idea/
+*.iml
+
 # OS & IDE junk files
 .DS_Store
 Thumbs.db

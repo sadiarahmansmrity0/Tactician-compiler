@@ -16,6 +16,8 @@ for name in nested_scopes duplicates; do
     input="tests/symbol_table/$name.tac"
     expected="tests/symbol_table/expected/$name.expected"
     actual="build/symbol-table-$name.actual"
+    normalized="build/symbol-table-$name.normalized"
+    normalized_expected="build/symbol-table-$name.expected.normalized"
     expected_status=0
     [ "$name" != duplicates ] || expected_status=1
 
@@ -23,9 +25,10 @@ for name in nested_scopes duplicates; do
     "$program" "$input" >"$actual" 2>&1
     status=$?
     set -e
-    tr -d '\r' < "$actual" > "build/symbol-table-$name.normalized"
+    tr -d '\r' < "$actual" > "$normalized"
+    tr -d '\r' < "$expected" > "$normalized_expected"
     if [ "$status" -eq "$expected_status" ] &&
-       diff -u "$expected" "build/symbol-table-$name.normalized"; then
+       diff -u "$normalized_expected" "$normalized"; then
         echo "PASS symbol-table AST: $name"
         passed=$((passed + 1))
     else
